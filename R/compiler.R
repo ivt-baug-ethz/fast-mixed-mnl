@@ -27,7 +27,7 @@ test_for_openmp_osx <- function() {
 #' 
 #' @export 
 specify_model <- function( utility_script, dataset = NULL , output_file = NULL, 
-                           compile=TRUE, model_name="mixl_model", disable_multicore=T, ...) {
+                           compile=TRUE, model_name="mixl_model", disable_multicore=T, logLik = NULL, ...) {
 
   #TODO: if data is null, skip all the validaiton
   #TODO: return an object instead of an environment
@@ -45,12 +45,6 @@ specify_model <- function( utility_script, dataset = NULL , output_file = NULL,
     stop (paste(c("The utility script is not valid", e1$error_messages), collapse = "\n"))
     
   } else{
-    
-    template <- "loglik.cpp"
-    template_location <- system.file("include", "mixl", template, package = "mixl")
-    cpp_template <- readr::read_file(template_location)
-    
-    e1$cpp_code <- convert_to_valid_cpp(cpp_template, e1=e1)
 
     if (!is.null(output_file)) {
       readr::write_file(e1$cpp_code, output_file)
@@ -64,6 +58,18 @@ specify_model <- function( utility_script, dataset = NULL , output_file = NULL,
     
     #set modelname 
     cpp_container$model_name <- model_name
+    
+    if(!is.null(logLik))
+    {
+      cpp_container$logLik <- logLik
+      return (cpp_container)
+    }
+    
+    template <- "loglik.cpp"
+    template_location <- system.file("include", "mixl", template, package = "mixl")
+    cpp_template <- readr::read_file(template_location)
+    
+    e1$cpp_code <- convert_to_valid_cpp(cpp_template, e1=e1)
     
     if (compile) {
 

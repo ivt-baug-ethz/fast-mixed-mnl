@@ -40,3 +40,5 @@ MSL-dev-code
 a.out
 src/a.out
 ^CRAN-RELEASE$
+
+dev.R
