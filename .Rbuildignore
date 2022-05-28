@@ -42,3 +42,4 @@ src/a.out
 ^CRAN-RELEASE$
 
 dev.R
+r_log_lik.R

@@ -1,6 +1,11 @@
 devtools::load_all()
 
+## draws are created in estimate (passed as matrix). If draws matrix is not specified
+## the function mixl::create_halton_draws is used. Alternatively, you can specify a
+## draws matrix (following any distribution you'd like) and then this will be used
+## in the utility specification...
 
+## mixl::convert_to_valid_cpp (see preprocessor.R) actually also parses the utility!
 
 # simple model ------------------------------------------------------------
 
@@ -76,6 +81,16 @@ ll2(betas)
 # extend specify_model ----------------------------------------------------
 
 ## TODO: extend function to pass alternative c++ likelihood function (passing R functions will work as well!)
+## TODO: write R logLik equivalent and test
+
+## for each individual return log likelihood
+## betas is named vector!
+r_log_lik <- function(betas, data)
+{
+  #### -> see script r_log_lik.R
+  NULL
+}
+
 
 
 
